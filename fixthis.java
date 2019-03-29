@@ -1,47 +1,71 @@
 
 //////////////////////////// Q U E S T I O N  3 //////////////////////////
 
-    @Override
-    public ArrayBag<T> intersection(ArrayBag<T> aSet) {
+    public ArrayBag<T> intersection(ArrayBag<T> aBag) {
+        ArrayBag<T> newBag = new ArrayBag();
+        ArrayBag<T> bagA = new ArrayBag();
+        ArrayBag<T> bagB = new ArrayBag();
         
-        ArrayBag<T> inter = new ArrayBag();
-        ArrayBag<T> setA = this;
-        ArrayBag<T> setB = aSet;      
-        int i=0;
-        while(i<setA.numberOfEntries){
-            int j=0;
-            while(j<setB.numberOfEntries){
-                if(setA.contains(setB.bag[j])){//setA and B at [j] is ==
-                    inter.add(setB.bag[j]);
-                    setA.remove(setB.bag[j]);
-                    setB.remove(setB.bag[j]);
-                    break;
-                }
-                else j++;
-            }
-            if(j==setB.numberOfEntries)
-                i++;
+        //Copy items from the original bag to another bag
+        for(int i=0; i<numberOfEntries; i++) {
+            bagA.add(bag[i]);
+        }        
+        for(int i=0; i<aBag.numberOfEntries; i++) {
+            bagB.add(aBag.bag[i]);
         }
-        return inter;
+        
+        int i = 0;
+        while(i<bagA.numberOfEntries) {
+            int j =0;
+            while(j<bagB.numberOfEntries) {
+                if(bagA.bag[i]==bagB.bag[j]) {
+                    newBag.add(bagA.bag[i]);
+                    bagA.remove(bagA.bag[i]);
+                    bagB.remove(bagA.bag[i]);
+                    break;
+                } else j++;
+            }
+            if(j==bagB.numberOfEntries) {
+                i++;
+            }
+        }       
+        return newBag;
     }
     
 //////////////////////////// Q U E S T I O N  4 //////////////////////////
 
-    @Override
-    public ArrayBag<T> difference(ArrayBag<T> aSet) {
+    public ArrayBag<T> difference(ArrayBag<T> aBag) {
+
+        ArrayBag<T> newBag = new ArrayBag();
+        ArrayBag<T> bagA = new ArrayBag();
+        ArrayBag<T> bagB = new ArrayBag();
         
-        ArrayBag<T> diff = this.intersection(aSet);
-        ArrayBag<T> setA = this;
-        
-        int i=0;
-        while(i<setA.numberOfEntries){
-            if(setA.contains(diff.bag[i])){
-                setA.remove(diff.bag[i]);
-            }
-            else
-                i++;
+        //Copy items from the original bag to another bag
+        for(int i=0; i<numberOfEntries; i++) {
+            bagA.add(bag[i]);
+        }      
+        for(int i=0; i<aBag.numberOfEntries; i++) {
+            bagB.add(aBag.bag[i]);
         }
         
-        return setA;
- 
+        //Processs
+        int i = 0;
+        while(i<bagA.numberOfEntries) {
+            int j =0;
+            while(j<bagB.numberOfEntries) {
+                if(bagA.bag[i]==bagB.bag[j]) {
+                    bagA.remove(bagA.bag[i]);
+                    bagB.remove(bagA.bag[i]);
+                    break;
+                } else j++;
+            }
+            if(j==bagB.numberOfEntries) {
+                i++;
+            }
+          
+        }
+        for(int k=0;k<bagA.numberOfEntries;k++) {
+            newBag.add(bagA.bag[k]);
+        }
+        return newBag;
     }
